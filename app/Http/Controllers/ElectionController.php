@@ -11,15 +11,47 @@ class ElectionController extends Controller {
     public function show(Request $request) {
         $search = $request->search;
         $filter = $request->filter;
+        $search_by = $request->search_by;
 
-        $elections = Election::where(function($query) use ($search) {
-            $query->where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%")
-            ->orWhere('street', 'LIKE', "%" . $search . "%")
-            ->orWhere('home_number', 'LIKE', "%" . $search . "%")
-            ->orWhere('id_number', 'LIKE', "%" . $search . "%")
-            ->orWhere('seq_number', 'LIKE', "%" . $search . "%")
-            ->orWhere('kalpi', 'LIKE', "%" . $search . "%");
-        });
+        // $elections = Election::where(function($query) use ($search) {
+        //     $query->where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%")
+        //     ->orWhere(DB::raw("CONCAT(`street`, ' ', `home_number`)"), 'LIKE', "%" . $search . "%")
+        //     // ->orWhere('street', 'LIKE', "%" . $search . "%")
+        //     // ->orWhere('home_number', 'LIKE', "%" . $search . "%")
+        //     ->orWhere('id_number', 'LIKE', "%" . $search . "%")
+        //     ->orWhere('seq_number', 'LIKE', "%" . $search . "%")
+        //     ->orWhere('kalpi', 'LIKE', "%" . $search . "%");
+        // });
+
+        if($search_by === 'all') {
+            $elections = Election::where(function($query) use ($search) {
+                $query->where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%")
+                ->orWhere(DB::raw("CONCAT(`street`, ' ', `home_number`)"), 'LIKE', "%" . $search . "%")
+                ->orWhere('id_number', 'LIKE', "%" . $search . "%")
+                ->orWhere('seq_number', 'LIKE', "%" . $search . "%")
+                ->orWhere('kalpi', 'LIKE', "%" . $search . "%");
+            });
+        } else if($search_by === 'seq_number'){
+            $elections = Election::where('seq_number', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'kalpi') {
+            $elections = Election::where('kalpi', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'id_number') {
+            $elections = Election::where('id_number', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'home_number') {
+            $elections = Election::where('home_number', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'street') {
+            $elections = Election::where('street', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'full_name') {
+            $elections = Election::where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'first_name') {
+            $elections = Election::where('first_name', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'father_name') {
+            $elections = Election::where('father_name', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'last_name') {
+            $elections = Election::where('last_name', 'LIKE', "%" . $search . "%");
+        } else {
+            $elections = Election::where('id', '>', 0);
+        }
 
         if($filter === 'voted') {
             $elections->where('voting', true);
@@ -33,7 +65,17 @@ class ElectionController extends Controller {
             'elections' => $results,
             'search' => $search,
             'filter' => $filter,
+            'search_by' => $search_by,
         ]);
+    }
+
+    public function updateVoting(Request $request, $id) {  
+        $election = Election::find($id);
+
+        $election->voting = !$election->voting;
+        $election->save();
+
+        return redirect('/');
     }
 
     public function saveElections(Request $request) {
@@ -57,8 +99,12 @@ class ElectionController extends Controller {
     }
 
     public function updateElection(Request $request) {
-        $election = Election::where('seq_number', $request->seq_number)->first();
+        $election = Election::where('seq_number', $request->seq_number)
+        ->where('kalpi', $request->kalpi)->first();
+
         $election->voting = true;
+        $election->save();
+
         return response()->json(['success' => 'change voting to true successfully']);
     }
 }

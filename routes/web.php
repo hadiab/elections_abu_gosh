@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'ElectionController@show');
+Route::post('/update/{id}', 'ElectionController@updateVoting');
