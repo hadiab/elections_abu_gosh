@@ -14,15 +14,16 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
     </head>
-    <body>
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
+    <body >
+    <div style="direction: rtl;">
+        <div class="container mt-5" style="direction: rtl;">
+            <div class="row" style="direction: rtl;">
+                <div class="col-12"  style="direction: rtl;">
+                    <div class="row" style="direction: rtl;">
 
                         <!-- title -->
-                        <div class="col-4">
-                            <h1>Elections</h1> 
+                        <div class="col-4" style="text-align: right;">
+                            <h1>רשימת מצביעים</h1> 
                         </div>
                         
                         <!-- Form -->
@@ -30,18 +31,18 @@
                             <form method="get" action="/">
                                 <div class="row">
                                     <div class="col-5 d-flex align-items-center">
-                                        <label class="mr-2">Search</label>
+                                        <label class="ml-2 mt-3">חיפוש</label>
                                         <input type="text" name="search" class="form-control" value="{{ $search }}" />
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-5 mt-1">
                                         <select name="filter" class="ml-4 form-control" id="exampleFormControlSelect1">
-                                            <option value="all" {{ ($filter == 'all') ? 'selected' : '' }}>All</option>
-                                            <option value="voted" {{ ($filter == 'voted') ? 'selected' : '' }}>Voted</option>
-                                            <option value="not_voted" {{ ($filter == 'not_voted') ? 'selected' : '' }}>Not voted</option>
+                                            <option value="all" {{ ($filter == 'all') ? 'selected' : '' }}>הכל</option>
+                                            <option value="voted" {{ ($filter == 'voted') ? 'selected' : '' }}>הצביע</option>
+                                            <option value="not_voted" {{ ($filter == 'not_voted') ? 'selected' : '' }}>לא הצביע</option>
                                         </select>
                                     </div>
                                     <div class="col-2">
-                                        <button class="btn btn-primary">Submit</button>
+                                        <button class="btn btn-primary">בצע</button>
                                     </div>
                                 </div>
                             </form>
@@ -49,20 +50,20 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+                <div class="col-12" style="direction: rtl;">
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Seq Number</th>
-                            <th scope="col">Kalpi</th>
-                            <th scope="col">ID</th>
-                            <th scope="col">Home Number</th>
-                            <th scope="col">Street</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Father Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Voting</th>
+                            <th scope="col">מס' סידורי</th>
+                            <th scope="col">קלפי</th>
+                            <th scope="col">ת.ז</th>
+                            <th scope="col">מס' בית</th>
+                            <th scope="col">רחוב</th>
+                            <th scope="col">שם מלא</th>
+                            <th scope="col">שם האב</th>
+                            <th scope="col">שם משפחה</th>
+                            <th scope="col">מצב</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,10 +79,11 @@
                                     <td>{{ $election->father_name }}</td>
                                     <td>{{ $election->last_name }}</td>
                                     <td>
-                                        @if ($election->voting)
-                                            <i class="fas fa-check text-success"></i>
+                                        @if ($election->voting == false)
+                                                                                        הצביע <i class="fas fa-check text-success"></i>
+ 
                                         @else
-                                            <span>---</span>    
+                                        <span>---</span> 
                                         @endif
                                     </td>
                                 </tr>
@@ -97,6 +99,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </body>
 </html>
