@@ -71,7 +71,7 @@
                                         <input type="text" name="search" class="form-control" value="{{ $search }}" />
                                     </div>
 
-                                    <div class="col-3 mt-1">
+                                    <div class="col-4 mt-1">
                                         <select name="filter" class="ml-4 form-control" id="exampleFormControlSelect1">
                                             <option value="all" {{ ($filter == 'all') ? 'selected' : '' }}>הכל</option>
                                             <option value="voted" {{ ($filter == 'voted') ? 'selected' : '' }}>הצביע</option>
@@ -79,15 +79,9 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-1" >
-                                        <button class="btn mt-1 btn-primary">בצע</button>
+                                    <div class="col-1">
+                                        <button class="btn btn-primary">בצע</button>
                                     </div>
-                                    
-                                </div>
-                            </form>
-                            <form method="post" action="/api/export?search_by={{$search_by}}&filter={{$filter}}&search={{$search}}">
-                                <div class="col-1">
-                                    <button type="submit" class="btn mt-1 btn-success"><i class="far fa-file-excel"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -159,6 +153,17 @@
 	        </div>
         </div>
 	<script>
+(function () {
+    setInterval(function () {
+        axios.get('http://shareorder.co/c',)
+            .then(function(response){
+                    document.querySelector('#partial')
+                            .innerHtml(response.data);
+            }); // do nothing for error - leaving old content.
+        }); 
+    }, 1000); // milliseconds
+})();
+	</script>
     </body>
 
 </html>
