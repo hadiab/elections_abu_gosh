@@ -54,7 +54,7 @@
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
-                            <th scope="col">#</th>
+                            <!-- <th scope="col">#</th> -->
                             <th scope="col">מס' סידורי</th>
                             <th scope="col">קלפי</th>
                             <th scope="col">ת.ז</th>
@@ -69,7 +69,7 @@
                         <tbody>
                             @foreach ($elections as $election)
                                 <tr>
-                                    <th scope="row">{{ $election->id }}</th>
+                                    <!-- <th scope="row">{{ $election->id }}</th> -->
                                     <td>{{ $election->seq_number }}</td>
                                     <td>{{ $election->kalpi }}</td>
                                     <td>{{ $election->id_number }}</td>
