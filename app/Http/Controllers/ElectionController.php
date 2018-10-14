@@ -89,7 +89,7 @@ class ElectionController extends Controller {
             $election->father_name = $item['father_name'];
             $election->first_name = $item['first_name'];
             $election->last_name = $item['last_name'];
-            $election->kalpi = '1';
+            $election->kalpi = $item['kalpi'];
             $election->voting = false;
             $election->save();
         }
@@ -99,9 +99,9 @@ class ElectionController extends Controller {
     }
 
     public function updateElection(Request $request) {
-        $election = Election::where('seq_number', $request->seq_number)
-        ->where('kalpi', $request->kalpi)->first();
+	$matchThese = ['seq_number' => $request->seq_number, 'kalpi' => $request->kalpi];
 
+        $election = Election::where($matchThese)->first();
         $election->voting = true;
         $election->save();
 

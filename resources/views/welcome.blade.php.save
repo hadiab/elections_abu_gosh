@@ -155,7 +155,7 @@
 	<script>
 (function () {
     setInterval(function () {
-        axios.get('/',)
+        axios.get('http://shareorder.co/c',)
             .then(function(response){
                     document.querySelector('#partial')
                             .innerHtml(response.data);
