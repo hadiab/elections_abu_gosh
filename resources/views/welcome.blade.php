@@ -125,8 +125,11 @@
                                         @endif
                                     </td>
                                     <td>
+
                                         <form method="post" action="/update/{{$election->id}}">
-                                            @csrf
+				
+{{csrf_field()}}                                            
+					    @csrf
 
                                             @if ($election->voting == true)
                                             <button class="btn btn-danger btn-sm">בטל הצבעה</button>
