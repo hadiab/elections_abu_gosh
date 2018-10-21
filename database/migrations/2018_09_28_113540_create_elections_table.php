@@ -21,9 +21,10 @@ class CreateElectionsTable extends Migration {
             $table->string('father_name')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-	    $table->string('belonges_to')->nullable();
-	    $table->string('active_person')->nullable();
+	        $table->string('belonges_to')->nullable();
+	        $table->string('active_person')->nullable();
             $table->string('kalpi')->nullable();
+            $table->string('location')->nullable();
             $table->boolean('voting')->default(0);
             $table->timestamps();
         });

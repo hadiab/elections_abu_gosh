@@ -74,6 +74,15 @@ class ElectionController extends Controller {
         ]);
     }
 
+
+    public function getKalpi(Request $request){
+        $election = Election::where('id_number','=',$request->id_number)->first();
+        return response()->json([
+            'kalpi' =>  $election->kalpi,
+            'location'=>$election->location
+        ]); 
+
+    }
     public function updateVoting(Request $request, $id) {  
         $election = Election::find($id);
 

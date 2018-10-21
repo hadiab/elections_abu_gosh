@@ -21,11 +21,12 @@
             .logo {
                 width: 150px;
             }
+           
         </style>
     </head>
     <body >
     <div id="partial" style="direction: rtl;">
-        <div class="container mt-5" style="direction: rtl;">
+        <div class="container mt-5" style="direction: rtl; width: 2000px !important;">
             <div class="row" style="direction: rtl;">
                 <div class="col-12"  style="direction: rtl;">
                     <div class="row align-items-center" style="direction: rtl;">
@@ -102,10 +103,10 @@
                             <th scope="col">שם פרטי</th>
                             <th scope="col">שם האב</th>
                             <th scope="col">שם משפחה</th>
+                            <th scope="col">שייך למשפחה</th>
+                            <th scope="col">פעיל מס </th>
                             <th scope="col">מצב</th>
                             <th scope="col"></th>
-			    <th scope="col">שייך למשפחה</th>
-			    <th scope="col">פעיל מס </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -120,7 +121,9 @@
                                     <td>{{ $election->first_name }}</td>
                                     <td>{{ $election->father_name }}</td>
                                     <td>{{ $election->last_name }}</td>
-				    <td>
+                                    <td>{{  $election->belonges_to }}</td>
+				                    <td> {{ $election->active_person}} </td>
+				              <td>
                                         @if ($election->voting == true)
                                         <i class="fas fa-check text-success"></i>
                                         @else
@@ -128,10 +131,9 @@
                                         @endif
                                     </td>
                                     
-				    <td>
+				             <td>
                                         <form method="post" action="/update/{{$election->id}}">
-				
-{{csrf_field()}}                                            
+                        {{csrf_field()}}                                            
 					    @csrf
 
                                             @if ($election->voting == true)
@@ -141,8 +143,7 @@
                                             @endif
                                         </form>
                                     </td>
-				   <td>{{  $election->belonges_to }}</td>
-				   <td> {{ $election->active_person}} </td>
+				  
                                 </tr>
                             @endforeach
                         </tbody>
