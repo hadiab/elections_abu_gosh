@@ -95,6 +95,8 @@
                                     </div>
                                 </div>
                             </form>
+                           
+
                         </div>
                     </div>
                 </div>
@@ -115,7 +117,11 @@
                             <th scope="col">שייך למשפחה</th>
                             <th scope="col">פעיל מס </th>
                             <th scope="col">מצב</th>
-                            <th scope="col"></th>
+                            <th scope="col">
+                            <form method="post" action="/api/export?filter={{$filter}}&search_by={{$search_by}}&search={{$search}}">
+                                <button taget="_blank" class="btn btn-success"><i class="far fa-file-excel"></i></button>
+                            </form>
+                            </th>
                             </tr>
                         </thead>
                         <tbody>

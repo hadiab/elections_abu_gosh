@@ -93,6 +93,7 @@ class ElectionController extends Controller {
         ]); 
 
     }
+    
     public function updateVoting(Request $request, $id) {  
         $election = Election::find($id);
 
@@ -155,4 +156,84 @@ class ElectionController extends Controller {
 
         return response()->json(['success' => 'change voting to true successfully']);
     }
+
+
+    public function export(Request $request){
+
+        $search = $request->search;
+        $filter = $request->filter;
+        $search_by = $request->search_by;
+
+
+        $headers = array(
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=exported.xlsx",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        );
+
+        
+        if($search_by === 'all') {
+            $elections = Election::where(function($query) use ($search) {
+                $query->where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%")
+                ->orWhere(DB::raw("CONCAT(`street`, ' ', `home_number`)"), 'LIKE', "%" . $search . "%")
+                ->orWhere('id_number', 'LIKE', "%" . $search . "%")
+		->orWhere('active_person', 'LIKE', "%" .  $search ."%")
+                ->orWhere('seq_number', 'LIKE', "%" . $search . "%")
+                ->orWhere('kalpi', 'LIKE', "%" . $search . "%");
+            });
+        } else if($search_by === 'seq_number'){
+            $elections = Election::where('seq_number', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'kalpi') {
+            $elections = Election::where('kalpi', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'id_number') {
+            $elections = Election::where('id_number', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'home_number') {
+            $elections = Election::where('home_number', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'street') {
+            $elections = Election::where('street', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'full_name') {
+            $elections = Election::where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'first_name') {
+            $elections = Election::where('first_name', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'father_name') {
+            $elections = Election::where('father_name', 'LIKE', "%" . $search . "%");
+        } else if($search_by === 'last_name') {
+            $elections = Election::where('last_name', 'LIKE', "%" . $search . "%");
+        }
+	else if($search_by === 'active_person') {
+	    $elections = Election::where('active_person', 'LIKE' , "%" . $search . "%");
+	}
+	 else {
+            $elections = Election::where('id', '>', 0);
+        }
+	
+        if($filter === 'voted') {
+            $elections->where('voting', true);
+        } else if($filter === 'not_voted') {
+            $elections->where('voting', false);
+        }
+
+        $results = $elections->get();
+
+        $columns = array('שם', 'שם אב', 'שם משפחה', 'קלפי', 'מס סידורי', 'רחוב', 'מס בית', 'ת.ז', 'פעיל', 'הצביע','שייך למשפחה');
+
+        $callback = function() use ($results, $columns)
+        {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach($results as $result) {
+                fputcsv($file, array($result->first_name,$result->father_name,
+                                     $result->last_name,$result->kalpi,$result->seq_number
+                                    ,$result->street,$result->home_number,$result->id_number,$result->active_person,$result->voting ? 'כן' : 'לא', 
+                                    $result->belonges_to));
+            }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
 }
+}
+
+
