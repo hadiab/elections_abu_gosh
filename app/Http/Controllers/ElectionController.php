@@ -112,7 +112,7 @@ class ElectionController extends Controller {
     }
 
     public function login(Request $request){
-        if($request->user == 'Admin' && $request->password == 'Alef'){
+        if($request->user == 'Admin' && $request->password == 'Alef1221'){
             session(['logged_in' => true]);
             return redirect('/');
         }
