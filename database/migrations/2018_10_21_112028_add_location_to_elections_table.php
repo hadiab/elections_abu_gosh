@@ -15,7 +15,7 @@ class AddLocationToElectionsTable extends Migration
     {
         Schema::table('elections', function (Blueprint $table) {
             //
-            $table->string('location')->nullable();
+           $table->string('location')->nullable();
         });
     }
 

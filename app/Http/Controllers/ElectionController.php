@@ -9,6 +9,10 @@ use DB;
 class ElectionController extends Controller {
 
     public function show(Request $request) {
+        $isLogged = session('logged_in',false);
+        if($isLogged == false){
+            return redirect('/login');
+        }
         $search = $request->search;
         $filter = $request->filter;
         $search_by = $request->search_by;
@@ -75,6 +79,12 @@ class ElectionController extends Controller {
     }
 
 
+    public function logout(){
+        session(['logged_in' => false]);
+        return redirect('/login');
+
+    }
+
     public function getKalpi(Request $request){
         $election = Election::where('id_number','=',$request->id_number)->first();
         return response()->json([
@@ -91,6 +101,28 @@ class ElectionController extends Controller {
 
         return redirect('/');
     }
+
+    public function loginView(Request $request){
+        $isLogged = session('logged_in',false);
+        if($isLogged == true){
+            return redirect('/');
+        }
+        return view('login');
+
+    }
+
+    public function login(Request $request){
+        if($request->user == 'Admin' && $request->password == 'Alef'){
+            session(['logged_in' => true]);
+            return redirect('/');
+        }
+        else{
+            return redirect('/login');
+        }
+        
+
+    }
+
 
     public function saveElections(Request $request) {
 
