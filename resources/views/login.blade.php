@@ -26,6 +26,9 @@
     </head>
     <body >
         <div class="container mt-5">
+        <div class="col-12 text-center" >
+        <img class="logo" src="{{ asset('images/profile.png') }}" />
+        </div>
             <div class="row" >
             <div class="col-4 offset-4" >
             <div style="direction: rtl; text-align: right;">
