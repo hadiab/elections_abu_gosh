@@ -13,6 +13,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+
         <style>
             .voting {
                 background: yellow;
@@ -31,6 +32,13 @@
                 <div class="col-12"  style="direction: rtl;">
                     <div class="row align-items-center" style="direction: rtl;">
 
+                        <div class="col-1">
+                            <form action="/logout" method="post">
+                            {{csrf_field()}}                                            
+					    @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">יציאה</button>
+                            </form>
+                        </div>
                         <!-- title -->
                         <div class="col-3" style="text-align: right;">
                             <a href="/">
@@ -38,8 +46,9 @@
                             </a>
                         </div>
                         
+                       
                         <!-- Form -->
-                        <div class="col-9">
+                        <div class="col-8">
                             <form method="get" action="/">
                                 <div class="row">
 

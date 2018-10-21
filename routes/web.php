@@ -12,4 +12,7 @@
 */
 
 Route::get('/', 'ElectionController@show');
+Route::get('/login', 'ElectionController@loginView');
+Route::post('/login','ElectionController@login');
+Route::post('/logout','ElectionController@logout');
 Route::post('/update/{id}', 'ElectionController@updateVoting');
