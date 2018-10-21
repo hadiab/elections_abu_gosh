@@ -167,7 +167,7 @@ class ElectionController extends Controller {
 
         $headers = array(
             "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=exported.xlsx",
+            "Content-Disposition" => "attachment; filename=exported.csv",
             "Pragma" => "no-cache",
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0"
