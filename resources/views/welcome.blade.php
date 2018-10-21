@@ -63,6 +63,7 @@
                                             <option value="father_name" {{($search_by == 'father_name') ? 'selected' : '' }}>שם האב</option>
 
                                             <option value="last_name" {{($search_by == 'last_name') ? 'selected' : '' }}>שם משפחה</option>
+					    <option value="active_person" {{($search_by == 'active_person') ? 'selected' : ''}}>פעיל בשטח </option>
                                         </select>
                                     </div>
 
@@ -103,6 +104,8 @@
                             <th scope="col">שם משפחה</th>
                             <th scope="col">מצב</th>
                             <th scope="col"></th>
+			    <th scope="col">שייך למשפחה</th>
+			    <th scope="col">פעיל מס </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,15 +120,15 @@
                                     <td>{{ $election->first_name }}</td>
                                     <td>{{ $election->father_name }}</td>
                                     <td>{{ $election->last_name }}</td>
-                                    <td>
+				    <td>
                                         @if ($election->voting == true)
                                         <i class="fas fa-check text-success"></i>
                                         @else
-                                        <span>---</span> 
+                                        <span>---</span>
                                         @endif
                                     </td>
-                                    <td>
-
+                                    
+				    <td>
                                         <form method="post" action="/update/{{$election->id}}">
 				
 {{csrf_field()}}                                            
@@ -138,6 +141,8 @@
                                             @endif
                                         </form>
                                     </td>
+				   <td>{{  $election->belonges_to }}</td>
+				   <td> {{ $election->active_person}} </td>
                                 </tr>
                             @endforeach
                         </tbody>

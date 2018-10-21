@@ -28,6 +28,7 @@ class ElectionController extends Controller {
                 $query->where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%")
                 ->orWhere(DB::raw("CONCAT(`street`, ' ', `home_number`)"), 'LIKE', "%" . $search . "%")
                 ->orWhere('id_number', 'LIKE', "%" . $search . "%")
+		->orWhere('active_person', 'LIKE', "%" .  $search ."%")
                 ->orWhere('seq_number', 'LIKE', "%" . $search . "%")
                 ->orWhere('kalpi', 'LIKE', "%" . $search . "%");
             });
@@ -49,10 +50,14 @@ class ElectionController extends Controller {
             $elections = Election::where('father_name', 'LIKE', "%" . $search . "%");
         } else if($search_by === 'last_name') {
             $elections = Election::where('last_name', 'LIKE', "%" . $search . "%");
-        } else {
+        }
+	else if($search_by === 'active_person') {
+	    $elections = Election::where('active_person', 'LIKE' , "%" . $search . "%");
+	}
+	 else {
             $elections = Election::where('id', '>', 0);
         }
-
+	
         if($filter === 'voted') {
             $elections->where('voting', true);
         } else if($filter === 'not_voted') {
@@ -88,6 +93,8 @@ class ElectionController extends Controller {
             $election->street = $item['street'];
             $election->father_name = $item['father_name'];
             $election->first_name = $item['first_name'];
+	    $election->belonges_to = $item['belonges_to'];
+	    $election->active_person = $item['active_person'];
             $election->last_name = $item['last_name'];
             $election->kalpi = $item['kalpi'];
             $election->voting = false;
