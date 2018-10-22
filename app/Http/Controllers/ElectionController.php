@@ -16,7 +16,8 @@ class ElectionController extends Controller {
         $search = $request->search;
         $filter = $request->filter;
         $search_by = $request->search_by;
-
+        $kalpi = $request->kalpi;
+        
         // $elections = Election::where(function($query) use ($search) {
         //     $query->where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%")
         //     ->orWhere(DB::raw("CONCAT(`street`, ' ', `home_number`)"), 'LIKE', "%" . $search . "%")
@@ -33,14 +34,11 @@ class ElectionController extends Controller {
                 ->orWhere(DB::raw("CONCAT(`street`, ' ', `home_number`)"), 'LIKE', "%" . $search . "%")
                 ->orWhere('id_number', 'LIKE', "%" . $search . "%")
 		->orWhere('active_person', 'LIKE', "%" .  $search ."%")
-                ->orWhere('seq_number', 'LIKE', "%" . $search . "%")
-                ->orWhere('kalpi', 'LIKE', "%" . $search . "%");
+                ->orWhere('seq_number', 'LIKE', "%" . $search . "%");
             });
         } else if($search_by === 'seq_number'){
             $elections = Election::where('seq_number', 'LIKE', "%" . $search . "%");
-        } else if($search_by === 'kalpi') {
-            $elections = Election::where('kalpi', 'LIKE', "%" . $search . "%");
-        } else if($search_by === 'id_number') {
+        }  else if($search_by === 'id_number') {
             $elections = Election::where('id_number', 'LIKE', "%" . $search . "%");
         } else if($search_by === 'home_number') {
             $elections = Election::where('home_number', 'LIKE', "%" . $search . "%");
@@ -61,19 +59,24 @@ class ElectionController extends Controller {
 	 else {
             $elections = Election::where('id', '>', 0);
         }
-	
+    
+        
         if($filter === 'voted') {
             $elections->where('voting', true);
         } else if($filter === 'not_voted') {
             $elections->where('voting', false);
         }
-
+        
+        // kalpi filter
+        if($kalpi !== 'all' && $kalpi){
+            $elections->where('kalpi',$kalpi);
+        }
         $results = $elections->paginate(30);
-
         return view('welcome', [
             'elections' => $results,
             'search' => $search,
             'filter' => $filter,
+            'kalpi' => $kalpi,
             'search_by' => $search_by,
         ]);
     }
@@ -96,6 +99,11 @@ class ElectionController extends Controller {
     
     public function updateVoting(Request $request, $id) {  
         $election = Election::find($id);
+
+        $search = $request->search;
+        $filter = $request->filter;
+        $search_by = $request->search_by;
+        $kalpi = $request->kalpi;
 
         $election->voting = !$election->voting;
         $election->save();
@@ -121,6 +129,62 @@ class ElectionController extends Controller {
             return redirect('/login');
         }
         
+
+    }
+
+
+    public function statistics(){
+
+        $kalpi_10_ebraheem = Election::where('last_name','איברהים')->where('kalpi','10')->where('voting',true)->count();
+        $kalpi_21_ebraheem = Election::where('last_name','איברהים')->where('kalpi','21')->where('voting',true)->count();
+        $kalpi_22_ebraheem = Election::where('last_name','איברהים')->where('kalpi','22')->where('voting',true)->count();
+        $kalpi_30_ebraheem = Election::where('last_name','איברהים')->where('kalpi','30')->where('voting',true)->count();
+        $kalpi_41_ebraheem = Election::where('last_name','איברהים')->where('kalpi','41')->where('voting',true)->count();
+        $kalpi_42_ebraheem = Election::where('last_name','איברהים')->where('kalpi','42')->where('voting',true)->count();
+        $kalpi_50_ebraheem = Election::where('last_name','איברהים')->where('kalpi','50')->where('voting',true)->count();
+        $kalpi_60_ebraheem = Election::where('last_name','איברהים')->where('kalpi','60')->where('voting',true)->count();
+        $kalpi_70_ebraheem = Election::where('last_name','איברהים')->where('kalpi','70')->where('voting',true)->count();
+        $kalpi_80_ebraheem = Election::where('last_name','איברהים')->where('kalpi','80')->where('voting',true)->count();
+
+        $kalpi_10_jaber = Election::where('last_name','ג\'בר')->where('kalpi','10')->where('voting',true)->count();
+        $kalpi_21_jaber = Election::where('last_name','ג\'בר')->where('kalpi','21')->where('voting',true)->count();
+        $kalpi_22_jaber = Election::where('last_name','ג\'בר')->where('kalpi','22')->where('voting',true)->count();
+        $kalpi_30_jaber = Election::where('last_name','ג\'בר')->where('kalpi','30')->where('voting',true)->count();
+        $kalpi_41_jaber = Election::where('last_name','ג\'בר')->where('kalpi','41')->where('voting',true)->count();
+        $kalpi_42_jaber = Election::where('last_name','ג\'בר')->where('kalpi','42')->where('voting',true)->count();
+        $kalpi_50_jaber = Election::where('last_name','ג\'בר')->where('kalpi','50')->where('voting',true)->count();
+        $kalpi_60_jaber = Election::where('last_name','ג\'בר')->where('kalpi','60')->where('voting',true)->count();
+        $kalpi_70_jaber = Election::where('last_name','ג\'בר')->where('kalpi','70')->where('voting',true)->count();
+        $kalpi_80_jaber = Election::where('last_name','ג\'בר')->where('kalpi','80')->where('voting',true)->count();
+
+
+        
+
+        $jaber = Election::where('last_name','ג\'בר')->where('voting',true)->count();
+        return response()->json([
+            'kalpi_10_ebraheem'=> $kalpi_10_ebraheem,
+            'kalpi_21_ebraheem'=> $kalpi_21_ebraheem,
+            'kalpi_22_ebraheem'=> $kalpi_22_ebraheem,
+            'kalpi_30_ebraheem'=> $kalpi_30_ebraheem,
+            'kalpi_41_ebraheem'=> $kalpi_41_ebraheem,
+            'kalpi_42_ebraheem'=> $kalpi_42_ebraheem,
+            'kalpi_50_ebraheem'=> $kalpi_50_ebraheem,
+            'kalpi_60_ebraheem'=> $kalpi_60_ebraheem,
+            'kalpi_70_ebraheem'=> $kalpi_70_ebraheem,
+            'kalpi_80_ebraheem'=> $kalpi_80_ebraheem,
+
+            'kalpi_10_jaber'=> $kalpi_10_jaber,
+            'kalpi_21_jaber'=> $kalpi_21_jaber,
+            'kalpi_22_jaber'=> $kalpi_22_jaber,
+            'kalpi_30_jaber'=> $kalpi_30_jaber,
+            'kalpi_41_jaber'=> $kalpi_41_jaber,
+            'kalpi_42_jaber'=> $kalpi_42_jaber,
+            'kalpi_50_jaber'=> $kalpi_50_jaber,
+            'kalpi_60_jaber'=> $kalpi_60_jaber,
+            'kalpi_70_jaber'=> $kalpi_70_jaber,
+            'kalpi_80_jaber'=> $kalpi_80_jaber
+            
+            ]);
 
     }
 
@@ -163,6 +227,7 @@ class ElectionController extends Controller {
         $search = $request->search;
         $filter = $request->filter;
         $search_by = $request->search_by;
+        $kalpi = $request->kalpi;
 
 
         $headers = array(
@@ -213,6 +278,11 @@ class ElectionController extends Controller {
             $elections->where('voting', true);
         } else if($filter === 'not_voted') {
             $elections->where('voting', false);
+        }
+
+         // kalpi filter
+         if($kalpi !== 'all' && $kalpi){
+            $elections->where('kalpi',$kalpi);
         }
 
         $results = $elections->get();

@@ -51,16 +51,7 @@
 	        </div>
     </div>
 	<script>
-(function () {
-    setInterval(function () {
-        axios.get('/',)
-            .then(function(response){
-                    document.querySelector('#partial')
-                            .innerHtml(response.data);
-            }); // do nothing for error - leaving old content.
-        }); 
-    }, 1000); // milliseconds
-})();
+
 	</script>
     </body>
 

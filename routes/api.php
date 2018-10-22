@@ -21,4 +21,5 @@ Route::post('/save_elections', 'ElectionController@saveElections');
 Route::post('/update_elections', 'ElectionController@updateElection');
 Route::post('/export', 'ElectionController@export');
 Route::get('/kalpi', 'ElectionController@getKalpi');
+Route::get('/statistics', 'ElectionController@statistics');
 

@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -27,38 +28,70 @@
     </head>
     <body >
     <div id="partial" style="direction: rtl;">
-        <div class="container mt-5" style="direction: rtl; width: 2000px !important;">
-            <div class="row" style="direction: rtl;">
-                <div class="col-12"  style="direction: rtl;">
+        <div class="container mt-2" >
+        <div class="row" style="direction: rtl;">
+                <div class="col-12"  style="direction: ltr;">
                     <div class="row align-items-center" style="direction: rtl;">
 
-                        <div class="col-1">
-                            <form action="/logout" method="post">
-                            {{csrf_field()}}                                            
-					    @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">יציאה</button>
-                            </form>
-                        </div>
+                      
                         <!-- title -->
-                        <div class="col-3" style="text-align: right;">
+                        <div class="col-10" style="text-align: right;">
                             <a href="/">
                                 <img class="logo" src="{{ asset('images/profile.png') }}" />
                             </a>
                         </div>
+                        <div class="col-2" >
+                            <form action="/logout" method="post">
+                            {{csrf_field()}}                                            
+					    @csrf
+                                <button type="submit" class="btn btn-warning btn-sm">התנתק</button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+
+
+            <div class="row" style="direction: rtl;">
+                <div class="col-12"  style="direction: rtl;">
+                    <div class="row align-items-center" style="direction: rtl;">
+
+                       
                         
                        
                         <!-- Form -->
-                        <div class="col-8">
+                        <div class="col-12">
                             <form method="get" action="/">
                                 <div class="row">
+                                <div class="col-2 mt-1">
+                                        <select name="kalpi" class="ml-4 form-control" id="exampleFormControlSelect2">
+                                            <option value="all" {{($kalpi == 'all') ? 'selected' : '' }}>קלפי</option>
+                                            <option value="10" {{($kalpi == '10') ? 'selected' : '' }}>10</option>
 
-                                    <div class="col-3 mt-1">
+                                            <option value="21" {{($kalpi == '21') ? 'selected' : '' }}>21</option>
+
+                                            <option value="22" {{($kalpi == '22') ? 'selected' : '' }}>22</option>
+
+                                            <option value="30" {{($kalpi == '30') ? 'selected' : '' }}>30</option>
+
+                                            <option value="41" {{($kalpi == '41') ? 'selected' : '' }}>41</option>
+                                            
+                                            <option value="42" {{($kalpi == '42') ? 'selected' : '' }}>42</option>
+
+                                            <option value="50" {{($kalpi == '50') ? 'selected' : '' }}>50</option>
+
+                                            <option value="60" {{($kalpi == '60') ? 'selected' : '' }}>60</option>
+
+                                            <option value="70" {{($kalpi == '70') ? 'selected' : '' }}>70</option>
+                                            <option value="80" {{($kalpi == '80') ? 'selected' : '' }}>80</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-2 mt-1">
                                         <select name="search_by" class="ml-4 form-control" id="exampleFormControlSelect2">
-                                            <option value="all" {{($search_by == 'all') ? 'selected' : '' }}>הכל</option>
+                                            <option value="all" {{($search_by == 'all') ? 'selected' : '' }}>חפש לפי</option>
 
                                             <option value="seq_number" {{($search_by == 'seq_number') ? 'selected' : '' }}>מס סידורי</option>
 
-                                            <option value="kalpi" {{($search_by == 'kalpi') ? 'selected' : '' }}>קלפי</option>
 
                                             <option value="id_number" {{($search_by == 'id_number') ? 'selected' : '' }}>ת.ז</option>
 
@@ -76,13 +109,14 @@
 					    <option value="active_person" {{($search_by == 'active_person') ? 'selected' : ''}}>פעיל בשטח </option>
                                         </select>
                                     </div>
+                                  
 
                                     <div class="col-4 d-flex align-items-center">
                                         <label class="ml-2 mt-3">חיפוש</label>
                                         <input type="text" name="search" class="form-control" value="{{ $search }}" />
                                     </div>
 
-                                    <div class="col-4 mt-1">
+                                    <div class="col-3 mt-1">
                                         <select name="filter" class="ml-4 form-control" id="exampleFormControlSelect1">
                                             <option value="all" {{ ($filter == 'all') ? 'selected' : '' }}>הכל</option>
                                             <option value="voted" {{ ($filter == 'voted') ? 'selected' : '' }}>הצביע</option>
@@ -105,20 +139,20 @@
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">מס' סידורי</th>
-                            <th scope="col">קלפי</th>
-                            <th scope="col">ת.ז</th>
-                            <th scope="col">מס' בית</th>
-                            <th scope="col">רחוב</th>
-                            <th scope="col">שם פרטי</th>
-                            <th scope="col">שם האב</th>
-                            <th scope="col">שם משפחה</th>
-                            <th scope="col">שייך למשפחה</th>
-                            <th scope="col">פעיל מס </th>
-                            <th scope="col">מצב</th>
-                            <th scope="col">
-                            <form method="post" action="/api/export?filter={{$filter}}&search_by={{$search_by}}&search={{$search}}">
+                            <th style="text-align: center;" scope="col">#</th>
+                            <th style="text-align: center;" scope="col">מס' סידורי</th>
+                            <th style="text-align: center;" scope="col">קלפי</th>
+                            <th style="text-align: center;" scope="col">ת.ז</th>
+                            <th style="text-align: center;" scope="col">מס' בית</th>
+                            <th style="text-align: center;" scope="col">רחוב</th>
+                            <th style="text-align: center;" scope="col">שם פרטי</th>
+                            <th style="text-align: center;" scope="col">שם האב</th>
+                            <th style="text-align: center;" scope="col">שם משפחה</th>
+                            <th style="text-align: center;" scope="col">שייך למשפחה</th>
+                            <th style="text-align: center;" scope="col">פעיל מס </th>
+                            <th style="text-align: center;" scope="col">מצב</th>
+                            <th style="text-align: center;" scope="col">
+                            <form method="post" action="/api/export?filter={{$filter}}&search_by={{$search_by}}&search={{$search}}&kalpi={{$kalpi}}">
                                 <button taget="_blank" class="btn btn-success"><i class="far fa-file-excel"></i></button>
                             </form>
                             </th>
@@ -126,39 +160,37 @@
                         </thead>
                         <tbody>
                             @foreach ($elections as $election)
-                                <tr class="{{ $election->voting == true ? 'voting' : ''  }}">
+                                <tr class="{{ $election->voting == true ? 'voting' : ''  }} tr-{{$election->id}}">
                                     <th scope="row">{{ $election->id }}</th>
-                                    <td>{{ $election->seq_number }}</td>
-                                    <td>{{ $election->kalpi }}</td>
-                                    <td>{{ $election->id_number }}</td>
-                                    <td>{{ $election->home_number }}</td>
-                                    <td>{{ $election->street }}</td>
-                                    <td>{{ $election->first_name }}</td>
-                                    <td>{{ $election->father_name }}</td>
-                                    <td>{{ $election->last_name }}</td>
-                                    <td>{{  $election->belonges_to }}</td>
-				                    <td> {{ $election->active_person}} </td>
+                                    <td style="text-align: center;">{{ $election->seq_number }}</td>
+                                    <td style="text-align: center;">{{ $election->kalpi }}</td>
+                                    <td style="text-align: center;">{{ $election->id_number }}</td>
+                                    <td style="text-align: center;">{{ $election->home_number }}</td>
+                                    <td style="text-align: center;">{{ $election->street }}</td>
+                                    <td style="text-align: center;">{{ $election->first_name }}</td>
+                                    <td style="text-align: center;">{{ $election->father_name }}</td>
+                                    <td style="text-align: center;">{{ $election->last_name }}</td>
+                                    <td style="text-align: center;">{{  $election->belonges_to }}</td>
+				                    <td style="text-align: center;"> {{ $election->active_person}} </td>
 				              <td>
                                         @if ($election->voting == true)
-                                        <i class="fas fa-check text-success"></i>
+                                        <span class="status-{{$election->id}}"><i class="fas fa-check text-success"></i></span>
                                         @else
-                                        <span>---</span>
+                                        <span class="status-{{$election->id}}">---</span>
                                         @endif
                                     </td>
                                     
 				             <td>
-                                        <form method="post" action="/update/{{$election->id}}">
+                                      
                         {{csrf_field()}}                                            
 					    @csrf
-
                                             @if ($election->voting == true)
-                                            <button class="btn btn-danger btn-sm">בטל הצבעה</button>
+                                            <button data-id="{{$election->id}}" data-voting="true" class="btn btn-danger btn-vote btn-sm">בטל הצבעה</button>
                                             @else
-                                            <button class="btn btn-success btn-sm">הצביע</button>
+                                            <button  data-id="{{$election->id}}" data-voting="false" class="btn btn-success btn-vote btn-sm">הצביע</button>
                                             @endif
-                                        </form>
                                     </td>
-				  
+                                   
                                 </tr>
                             @endforeach
                         </tbody>
@@ -169,6 +201,7 @@
                                 'search' => $search, 
                                 'filter' => $filter,
                                 'search_by' => $search_by,
+                                'kalpi' => $kalpi
                             ])->links() 
                         }}
                     </div>
@@ -176,17 +209,46 @@
             </div>
 	        </div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-(function () {
-    setInterval(function () {
-        axios.get('/',)
-            .then(function(response){
-                    document.querySelector('#partial')
-                            .innerHtml(response.data);
-            }); // do nothing for error - leaving old content.
-        }); 
-    }, 1000); // milliseconds
-})();
+
+        $(document).ready(function(){
+            $(".btn-vote").click(function(e){
+                e.preventDefault();
+                var id = $.parseJSON($(this).attr('data-id'));
+                var voting = $.parseJSON($(this).attr('data-voting'));
+                console.log(id, voting);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    context: this,
+                    url: "/update/" + id,
+                    method: 'post', 
+                    success: function(result) {
+                        if(voting) {
+                            $(this).addClass('btn-success')
+                            $(this).removeClass('btn-danger')
+                            $(this).text('הצביע')
+                            $(this).attr("data-voting",false)
+                            $('.tr-'+id).removeClass('voting')
+                            $('.status-'+id).html('---')
+                        } else {
+                            $(this).addClass('btn-danger')
+                            $(this).removeClass('btn-success')
+                            $(this).text('בטל הצבעה')
+                            $(this).attr("data-voting",true)
+                            $('.tr-'+id).addClass('voting')
+                            $('.status-'+id).html('<i class="fas fa-check text-success"></i>')
+                        }
+                        
+                    }
+                });
+
+            });
+            
+        });
+
 	</script>
     </body>
 
