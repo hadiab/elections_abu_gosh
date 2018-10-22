@@ -98,6 +98,7 @@ class ElectionController extends Controller {
         return response()->json([
             'kalpi' =>  $election->kalpi,
             'location'=>$election->location,
+            'seq_number'=>$election->seq_number,
             'full_name'=> $election->first_name . ' ' . $election->last_name
         ]); 
 
