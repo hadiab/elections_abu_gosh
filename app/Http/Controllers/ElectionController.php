@@ -90,6 +90,11 @@ class ElectionController extends Controller {
 
     public function getKalpi(Request $request){
         $election = Election::where('id_number','=',$request->id_number)->first();
+        if(!$election){
+            return response()->json([
+                "message" =>  'عذرا , رقم الهوية غير صحيح'
+            ],404);
+        }
         return response()->json([
             'kalpi' =>  $election->kalpi,
             'location'=>$election->location,
