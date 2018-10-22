@@ -92,7 +92,8 @@ class ElectionController extends Controller {
         $election = Election::where('id_number','=',$request->id_number)->first();
         return response()->json([
             'kalpi' =>  $election->kalpi,
-            'location'=>$election->location
+            'location'=>$election->location,
+            'full_name'=> $election->first_name . ' ' . $election->last_name
         ]); 
 
     }
