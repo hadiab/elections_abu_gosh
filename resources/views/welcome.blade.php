@@ -49,7 +49,13 @@
                         </div>
                     </div>
                     </div>
+	    <div class="row" style="direction: rtl;">	
+	         <div class="row align-items-center mr-4 mt-1 mb-2" style="direction: ltr; color: red;">
+<strong>
+	              תוצאות חיפוש :	{{$count}}
 
+	</strong>	</div>
+	   </div>
 
             <div class="row" style="direction: rtl;">
                 <div class="col-12"  style="direction: rtl;">
