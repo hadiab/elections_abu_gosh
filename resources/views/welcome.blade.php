@@ -158,18 +158,17 @@
                             <th style="text-align: center;" scope="col">פעיל מס </th>
                             <th style="text-align: center;" scope="col">מצב</th>
                             <th style="text-align: center;" scope="col">
+                            @if($count != 0)
                             <form method="post" action="/api/export?filter={{$filter}}&search_by={{$search_by}}&search={{$search}}&kalpi={{$kalpi}}">
                                 <button taget="_blank" class="btn btn-success"><i class="far fa-file-excel"></i></button>
                             </form>
+                            @endif
                             </th>
                             </tr>
                         </thead>
-                        @if ($count == 0)
-                            <div>
-                                אין תוצאות
-                            </div>
-                        @else
+                      
                         <tbody>
+                            
                             @foreach ($elections as $election)
                                 <tr class="{{ $election->voting == true ? 'voting' : ''  }} tr-{{$election->id}}">
                                     <th scope="row">{{ $election->id }}</th>
@@ -204,9 +203,14 @@
                                    
                                 </tr>
                             @endforeach
+                            
                         </tbody>
                     </table>
+
+                    @if ($count == 0)
+                        <div class="text-center mt-5" style="color: red;">אין תוצאות</div>
                     @endif
+                    
 
                     <div class="d-flex justify-content-center">
                         {{  $elections->appends([
