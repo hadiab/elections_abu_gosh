@@ -72,15 +72,12 @@ class ElectionController extends Controller {
             $elections->where('kalpi',$kalpi);
         }
         $results = $elections->paginate(30);
-	$count = $elections->count();
-
         return view('welcome', [
             'elections' => $results,
             'search' => $search,
             'filter' => $filter,
             'kalpi' => $kalpi,
             'search_by' => $search_by,
-	    'count' => $count
         ]);
     }
 
@@ -302,6 +299,7 @@ class ElectionController extends Controller {
         $callback = function() use ($results, $columns)
         {
             $file = fopen('php://output', 'w');
+            header('Content-Type: text/csv; charset:UTF-8');
             fputcsv($file, $columns);
 
             foreach($results as $result) {
