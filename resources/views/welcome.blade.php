@@ -158,6 +158,11 @@
                             </th>
                             </tr>
                         </thead>
+                        @if ($count == 0)
+                            <div>
+                                אין תוצאות
+                            </div>
+                        @else
                         <tbody>
                             @foreach ($elections as $election)
                                 <tr class="{{ $election->voting == true ? 'voting' : ''  }} tr-{{$election->id}}">
@@ -195,6 +200,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @endif
 
                     <div class="d-flex justify-content-center">
                         {{  $elections->appends([
