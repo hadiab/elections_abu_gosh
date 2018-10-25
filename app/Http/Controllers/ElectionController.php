@@ -72,15 +72,13 @@ class ElectionController extends Controller {
             $elections->where('kalpi',$kalpi);
         }
         $results = $elections->paginate(30);
-	$count = $elections->count();
-
         return view('welcome', [
             'elections' => $results,
             'search' => $search,
             'filter' => $filter,
             'kalpi' => $kalpi,
             'search_by' => $search_by,
-	    'count' => $count
+            'count' => $results->count()
         ]);
     }
 
@@ -244,6 +242,7 @@ class ElectionController extends Controller {
             "Content-type" => "text/csv",
             "Content-Disposition" => "attachment; filename=exported.csv",
             "Pragma" => "no-cache",
+
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0"
         );
@@ -302,8 +301,9 @@ class ElectionController extends Controller {
         $callback = function() use ($results, $columns)
         {
             $file = fopen('php://output', 'w');
+            header('Content-Type: text/csv; charset:UTF-8');
             fputcsv($file, $columns);
-
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
             foreach($results as $result) {
                 fputcsv($file, array($result->first_name,$result->father_name,
                                      $result->last_name,$result->kalpi,$result->seq_number
