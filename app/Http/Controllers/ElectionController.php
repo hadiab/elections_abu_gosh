@@ -78,6 +78,7 @@ class ElectionController extends Controller {
             'filter' => $filter,
             'kalpi' => $kalpi,
             'search_by' => $search_by,
+            'count' => $results->count()
         ]);
     }
 
