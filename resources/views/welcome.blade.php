@@ -141,7 +141,10 @@
                                             <option value="father_name" {{($search_by == 'father_name') ? 'selected' : '' }}>שם האב</option>
 
                                             <option value="last_name" {{($search_by == 'last_name') ? 'selected' : '' }}>שם משפחה</option>
-					    <option value="active_person" {{($search_by == 'active_person') ? 'selected' : ''}}>פעיל בשטח </option>
+					                       
+                                            <option value="active_person" {{($search_by == 'active_person') ? 'selected' : ''}}>פעיל בשטח </option>
+                                        
+                                            <option value="belonges_to" {{($search_by == 'belonges_to') ? 'selected' : ''}}>שייך למשפחה </option>
                                         </select>
                                     </div>
                                   

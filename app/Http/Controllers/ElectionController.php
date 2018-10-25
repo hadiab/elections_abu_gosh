@@ -33,14 +33,17 @@ class ElectionController extends Controller {
                 $query->where(DB::raw("CONCAT(`first_name`, ' ', `father_name`, ' ', `last_name`)"), 'LIKE', "%" . $search . "%")
                 ->orWhere(DB::raw("CONCAT(`street`, ' ', `home_number`)"), 'LIKE', "%" . $search . "%")
                 ->orWhere('id_number', 'LIKE', "%" . $search . "%")
-		->orWhere('active_person', 'LIKE', "%" .  $search ."%")
+                ->orWhere('active_person', 'LIKE', "%" .  $search ."%")
                 ->orWhere('seq_number', 'LIKE', "%" . $search . "%");
             });
         } else if($search_by === 'seq_number'){
             $elections = Election::where('seq_number', 'LIKE', "%" . $search . "%");
         }  else if($search_by === 'id_number') {
             $elections = Election::where('id_number', 'LIKE', "%" . $search . "%");
-        } else if($search_by === 'home_number') {
+        } 
+        else if($search_by === 'belonges_to') {
+            $elections = Election::where('belonges_to', 'LIKE', "%" . $search . "%");
+        }else if($search_by === 'home_number') {
             $elections = Election::where('home_number', 'LIKE', "%" . $search . "%");
         } else if($search_by === 'street') {
             $elections = Election::where('street', 'LIKE', "%" . $search . "%");
