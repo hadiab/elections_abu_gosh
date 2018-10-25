@@ -302,8 +302,8 @@ class ElectionController extends Controller {
         {
             $file = fopen('php://output', 'w');
             header('Content-Type: text/csv; charset:UTF-8');
+            fputs($file, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
             fputcsv($file, $columns);
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
             foreach($results as $result) {
                 fputcsv($file, array($result->first_name,$result->father_name,
                                      $result->last_name,$result->kalpi,$result->seq_number
