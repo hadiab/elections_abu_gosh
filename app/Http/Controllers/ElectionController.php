@@ -241,6 +241,7 @@ class ElectionController extends Controller {
             "Content-type" => "text/csv",
             "Content-Disposition" => "attachment; filename=exported.csv",
             "Pragma" => "no-cache",
+
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0"
         );
@@ -301,7 +302,7 @@ class ElectionController extends Controller {
             $file = fopen('php://output', 'w');
             header('Content-Type: text/csv; charset:UTF-8');
             fputcsv($file, $columns);
-
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
             foreach($results as $result) {
                 fputcsv($file, array($result->first_name,$result->father_name,
                                      $result->last_name,$result->kalpi,$result->seq_number
