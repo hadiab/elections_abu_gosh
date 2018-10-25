@@ -72,13 +72,15 @@ class ElectionController extends Controller {
             $elections->where('kalpi',$kalpi);
         }
         $results = $elections->paginate(30);
+        $voted = Election::where('voting',true)->get()->count();
         return view('welcome', [
             'elections' => $results,
             'search' => $search,
             'filter' => $filter,
             'kalpi' => $kalpi,
             'search_by' => $search_by,
-            'count' => $results->count()
+            'count' => $elections->count(),
+            'voted' => $voted
         ]);
     }
 
