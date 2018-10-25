@@ -19,7 +19,10 @@
             .voting {
                 background: yellow;
             }
-
+            .container{
+                overflow: auto;
+                overflow-y: hidden;
+            }
             .logo {
                 width: 150px;
             }
