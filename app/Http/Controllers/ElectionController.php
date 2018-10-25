@@ -242,7 +242,7 @@ class ElectionController extends Controller {
             "Content-type" => "text/csv",
             "Content-Disposition" => "attachment; filename=exported.csv",
             "Pragma" => "no-cache",
-
+            "charset" => 'UTF-8',
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
             "Expires" => "0"
         );
