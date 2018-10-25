@@ -76,6 +76,48 @@ class ElectionController extends Controller {
         }
         $results = $elections->paginate(30);
         $voted = Election::where('voting',true)->get()->count();
+        $ib = Election::where('voting',true)->where('last_name','איברהים')->orWhere('last_name','אברהים')->get()->count();
+        $jb = Election::where('voting',true)->where('last_name','ג\'בר')->orWhere('last_name','גבר')->get()->count();
+        $ab = Election::where('voting',true)->
+                where('last_name','עבדאל רחמן')
+                ->orWhere('last_name','עבד אל רחמאן')
+                ->orWhere('last_name','עבדול רחמן')
+                ->orWhere('last_name','עבדאל רחמאן')
+                ->orWhere('last_name','עבד אל רחמן')->get()->count();
+        $ot =  Election::where('voting',true)->
+                where('last_name','עותמן')
+                ->orWhere('last_name','עותמאן')
+                ->orWhere('last_name','אלח"ג עותמן')
+                ->orWhere('last_name','חג\' עותמאן')
+                ->orWhere('last_name','עבד אל רחמן')->get()->count();  
+                  
+        $al =Election::where('voting',true)->
+            where('last_name','עותמן')
+            ->orWhere('last_name','עליאן')
+            ->orWhere('last_name','אעליאן')->get()->count();    
+
+        $ak = Election::where('voting',true)->
+                where('last_name','אבו קטיש')
+                ->orWhere('last_name','אבוקטיש')
+                ->orWhere('last_name','אבו-קטיש')->get()->count();    
+
+        $ag =  $ak = Election::where('voting',true)->
+        where('last_name','אבו גוש')
+        ->orWhere('last_name','אבוגוש')
+        ->orWhere('last_name','אבו-גוש')->get()->count();  
+
+        $hk =  Election::where('voting',true)->
+        where('last_name','חטיב')
+        ->orWhere('last_name','ח\'טיב')->get()->count();  
+
+        $sa =  Election::where('voting',true)->
+        where('last_name','סאלח')
+        ->orWhere('last_name','צאלח')
+        ->orWhere('last_name','סלח')
+        ->orWhere('last_name','סאלח')
+        ->get()->count();  
+
+        /* $other =  */
         return view('welcome', [
             'elections' => $results,
             'search' => $search,
@@ -83,7 +125,16 @@ class ElectionController extends Controller {
             'kalpi' => $kalpi,
             'search_by' => $search_by,
             'count' => $elections->count(),
-            'voted' => $voted
+            'voted' => $voted,
+            'ib' => $ib,
+            'jb' => $jb,
+            'ab' => $ab,
+            'ot' => $ot,
+            'al' => $al,
+            'ak' => $ak,
+            'ag' => $ag,
+            'hk' => $hk,
+            'sa' => $sa
         ]);
     }
 

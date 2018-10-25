@@ -67,7 +67,6 @@
             <div class="row align-items-right  mt-1 mb-2" style="direction: rtl; color: red;">
             <strong style=" background: yellow; padding: 4px;">
                         סה"כ הצביעו :	{{$voted}}
-
             </strong>	
 
             
@@ -76,16 +75,42 @@
             
         </div>
 
-        <div class="row" style="display: none;">
         
-            <div class="col-12">
-                <canvas id="myChart"></canvas>
-            </div>
-        </div>
 
 
 	   </div>
+       <div class="row">
+        
+        <div class="col-12">
+                <div class="accordion" id="accordionExample">
+                        <div  id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-align-right" type="button" style="background-color: none;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            הצג סטטיסטיקה
+                            </button>
+                        </h5>
+                        </div>
 
+                        <div id="collapseOne" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                                   <canvas id="myChart" 
+                                 
+                                   >
+                                   </canvas>
+                        </div>
+                        </div>
+            </div>
+        </div>
+       <!--   data-ib="{{$ib}}"
+                                   data-jb="{{$jb}}"
+                                   data-ab="{{$ab}}"
+                                   data-ot="{{$ot}}"
+                                   data-al="{{$al}}"
+                                   data-ak="{{$ak}}"
+                                   data-ag="{{$ag}}"
+                                   data-hk="{{$hk}}"
+                                   data-sa="{{$sa}}" -->
+    </div>
             <div class="row" style="direction: rtl;">
                 <div class="col-12"  style="direction: rtl;">
                     <div class="row align-items-center" style="direction: rtl;">
@@ -258,13 +283,22 @@
 	        </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 	<script>
 
         $(document).ready(function(){
-
             var ctx = document.getElementById('myChart').getContext('2d');
+         /*    var ib = $.parseJSON($('myChart').attr('data-ib'));
+            var jb = $.parseJSON($('myChart').attr('data-jb'));
+            var ab = $.parseJSON($('myChart').attr('data-ab'));
+            var ak = $.parseJSON($('myChart').attr('data-ak'));
+            var hk = $.parseJSON($('myChart').attr('data-hk'));
+            var al = $.parseJSON($('myChart').attr('data-al'));
+            var ag = $.parseJSON($('myChart').attr('data-ag'));
+            var ot = $.parseJSON($('myChart').attr('data-ot'));
+            var sa = $.parseJSON($('myChart').attr('data-sa')); */
             var chart = new Chart(ctx, {
                 // The type of chart we want to create
                 type: 'doughnut',
@@ -274,8 +308,8 @@
                     labels: ["איברהים", "ג'בר", "עבדלרחמאן", "עותמן", "סאלח", "אבו קטיש", "אבו גוש","ח'טיב","עליאן"],
                     datasets: [{
                         label: "My First dataset",
-                        backgroundColor: ['#ee5511','#ee3311','#ee4411','#ee6611','#ee7711','#ee8811','#ee9911','#eeaa11','#eebb11'],
-                        data: [800, 100, 1200, 400, 600, 9, 300,300,1500],
+                        backgroundColor: ['#ee0000','#178ae5','#3ede04','#04625d','#ee7711','#fe25af','#750a64','#017e7d','#65621c'],
+                        data: [12, 11, 11, 11, 11, 11, 11,11,11],
                     }]
                 },
 
