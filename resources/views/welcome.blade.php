@@ -52,13 +52,38 @@
                         </div>
                     </div>
                     </div>
-	    <div class="row" style="direction: rtl;">	
-	         <div class="row align-items-center mr-4 mt-1 mb-2" style="direction: ltr; color: red;">
-    <strong>
-	              תוצאות חיפוש :	{{$count}}
+	    <div class="row" style="direction: rtl;  width: 100%;">	
+            <div class="col-3">
+                <div class="row align-items-right mr-2 mt-1 mb-2" style="direction: rtl; color: red;">
+                
+                    <strong style=" background: yellow; padding: 4px;">
+                                תוצאות חיפוש :	{{$count}}
 
-	</strong>	
-    </div>
+                    </strong>	
+                </div>
+            
+            </div>
+            <div class="col-3">
+            <div class="row align-items-right  mt-1 mb-2" style="direction: rtl; color: red;">
+            <strong style=" background: yellow; padding: 4px;">
+                        סה"כ הצביעו :	{{$voted}}
+
+            </strong>	
+
+            
+
+            </div>
+            
+        </div>
+
+        <div class="row" style="display: none;">
+        
+            <div class="col-12">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+
 	   </div>
 
             <div class="row" style="direction: rtl;">
@@ -230,9 +255,33 @@
 	        </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
 	<script>
 
         $(document).ready(function(){
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'doughnut',
+
+                // The data for our dataset
+                data: {
+                    labels: ["איברהים", "ג'בר", "עבדלרחמאן", "עותמן", "סאלח", "אבו קטיש", "אבו גוש","ח'טיב","עליאן"],
+                    datasets: [{
+                        label: "My First dataset",
+                        backgroundColor: ['#ee5511','#ee3311','#ee4411','#ee6611','#ee7711','#ee8811','#ee9911','#eeaa11','#eebb11'],
+                        data: [800, 100, 1200, 400, 600, 9, 300,300,1500],
+                    }]
+                },
+
+                // Configuration options go here
+                options: {}
+            });
+
+
+
             $(".btn-vote").click(function(e){
                 e.preventDefault();
                 var id = $.parseJSON($(this).attr('data-id'));
