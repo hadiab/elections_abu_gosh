@@ -244,8 +244,8 @@ class ElectionController extends Controller {
 
 
         $headers = array(
-            "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=exported.csv",
+            "Content-type" => "application/xls",
+            "Content-Disposition" => "attachment; filename=exported.xls",
             "Pragma" => "no-cache",
             "charset" => 'UTF-8',
             "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
@@ -262,7 +262,11 @@ class ElectionController extends Controller {
                 ->orWhere('seq_number', 'LIKE', "%" . $search . "%")
                 ->orWhere('kalpi', 'LIKE', "%" . $search . "%");
             });
-        } else if($search_by === 'seq_number'){
+        } 
+	else if($search_by === 'belonges_to') {
+            $elections = Election::where('belonges_to', 'LIKE', "%" . $search . "%");
+        }
+	else if($search_by === 'seq_number'){
             $elections = Election::where('seq_number', 'LIKE', "%" . $search . "%");
         } else if($search_by === 'kalpi') {
             $elections = Election::where('kalpi', 'LIKE', "%" . $search . "%");
