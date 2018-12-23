@@ -21,7 +21,7 @@
             .logo {
                 width: 150px;
             }
-           
+
         </style>
     </head>
     <body >
@@ -33,8 +33,8 @@
             <div class="col-4 offset-4" >
             <div style="direction: rtl; text-align: right;">
                 <form action="/login" method="post">
-                {{csrf_field()}}                                            
-					    @csrf
+                      {{csrf_field()}}
+                                @csrf
                     <div class="form-group" >
                         <input type="text" name="user" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="משתמש">
                     </div>
@@ -45,8 +45,8 @@
                     <button type="submit" class="btn btn-primary">כניסה</button>
                     </div>
                     </form>
-                    
-                </div> 
+
+                </div>
                 </div>
 	        </div>
     </div>
